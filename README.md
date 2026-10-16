@@ -1,8 +1,8 @@
-# Rubrica
+# Rubricai
 
-[![tests](https://github.com/JCPetrelli/rubrica/actions/workflows/test.yml/badge.svg)](https://github.com/JCPetrelli/rubrica/actions/workflows/test.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![tests](https://github.com/JCPetrelli/rubricai/actions/workflows/test.yml/badge.svg)](https://github.com/JCPetrelli/rubricai/actions/workflows/test.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A [Claude Code](https://claude.com/claude-code) skill that cleans up and completes the macOS Contacts address book (*rubrica* is Italian for address book). You talk, Claude runs the tools, and nothing changes until you approve a plan.
+A [Claude Code](https://claude.com/claude-code) skill that cleans up and completes the macOS Contacts address book (the name joins *rubrica*, Italian for address book, and AI). You talk, Claude runs the tools, and nothing changes until you approve a plan.
 
 It was built while cleaning a real address book. 2,037 cards went down to 1,440. Along the way, about 250 people from 20 years of e-mail and WhatsApp were added, and 90 more addresses were attached to existing cards.
 
@@ -95,7 +95,7 @@ $ rb scan linked --plan p3.json
 
 - "Tom cell" and "Tom casa" share numbers with "Tommaso Ferri", and "Tom" is a short form of "Tommaso". All three become one card.
 - "Nora (vet)" and "Ivo (judo)" share a landline, but their names do not fit together. They stay apart unless you say otherwise.
-- "Acme Tools" is a company card that somehow holds Omar's and Gloria's private e-mails. Following shared values blindly would glue Acme, Omar and Gloria into one person. Rubrica reports the chain instead. Here, you confirm that the card named `omar@example.org` is Omar:
+- "Acme Tools" is a company card that somehow holds Omar's and Gloria's private e-mails. Following shared values blindly would glue Acme, Omar and Gloria into one person. Rubricai reports the chain instead. Here, you confirm that the card named `omar@example.org` is Omar:
 
 ```
 $ rb pick p3.json --merge "Omar Lanza" omar@example.org
@@ -167,7 +167,7 @@ Left as they are: "Luca Rinaldi (VE)" (short abbreviations in capitals), "Greta 
 
 ### 6. Apple Mail
 
-Rubrica reads Mail's own index, `~/Library/Mail/V*/MailData/Envelope Index`, read-only. It uses senders, To and Cc recipients, dates, and Mail's flags for mailing lists and automated mail. It never opens a message body.
+Rubricai reads Mail's own index, `~/Library/Mail/V*/MailData/Envelope Index`, read-only. It uses senders, To and Cc recipients, dates, and Mail's flags for mailing lists and automated mail. It never opens a message body.
 
 First it asks which addresses are yours. Old ISP, university and work addresses count; if one is missing, it shows up as a "contact" and hides everyone you wrote to from it.
 
@@ -247,15 +247,15 @@ Requirements: macOS, [Claude Code](https://claude.com/claude-code), `python3` 3.
 As a plugin (recommended):
 
 ```
-/plugin marketplace add JCPetrelli/rubrica
-/plugin install rubrica@rubrica
+/plugin marketplace add JCPetrelli/rubricai
+/plugin install rubricai@rubricai
 ```
 
 Or from a clone:
 
 ```bash
-git clone https://github.com/JCPetrelli/rubrica.git && cd rubrica
-just install          # or: ln -sfn "$(pwd)/skills/rubrica" ~/.claude/skills/rubrica
+git clone https://github.com/JCPetrelli/rubricai.git && cd rubricai
+just install          # or: ln -sfn "$(pwd)/skills/rubricai" ~/.claude/skills/rubricai
 ```
 
 Then ask Claude Code something like:
@@ -271,7 +271,7 @@ Permissions macOS asks for:
 
 ## Use it without Claude
 
-Every step is a plain command. Run them in a folder of your choice: the files hold personal data. Below, `rb` stands for `PYTHONPATH=/path/to/rubrica python3 -m rubrica`.
+Every step is a plain command. Run them in a folder of your choice: the files hold personal data. Below, `rb` stands for `PYTHONPATH=/path/to/rubricai python3 -m rubricai`.
 
 | Command | What it does | Changes Contacts? |
 |---|---|---|

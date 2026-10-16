@@ -1,6 +1,6 @@
 import sqlite3
 
-from rubrica import whatsapp
+from rubricai import whatsapp
 
 
 def build(folder):

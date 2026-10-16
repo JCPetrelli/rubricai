@@ -1,12 +1,12 @@
 {
-  "name": "rubrica",
+  "name": "rubricai",
   "owner": {
     "name": "Jacopo Castellano"
   },
-  "description": "The rubrica skill: a tidy, complete macOS address book, one reviewed plan at a time.",
+  "description": "The rubricai skill: a tidy, complete macOS address book, one reviewed plan at a time.",
   "plugins": [
     {
-      "name": "rubrica",
+      "name": "rubricai",
       "source": "./",
       "description": "Deduplicate, merge and complete macOS Contacts from Apple Mail and WhatsApp Desktop."
     }

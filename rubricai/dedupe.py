@@ -1,6 +1,6 @@
 """Duplicate scans over an exported address book.
 
-A contact is a dict as written by `rubrica export`:
+A contact is a dict as written by `rubricai export`:
   id, name, first, middle, last, nickname, company (bool), organization, job,
   phones/emails/urls [{label, value}], addresses [{label, formatted}], note,
   birthday, modified, has_image (only with --images).

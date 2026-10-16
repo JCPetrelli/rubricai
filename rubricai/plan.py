@@ -27,7 +27,7 @@ def load(path):
     with open(path, encoding="utf-8") as f:
         plan = json.load(f)
     if plan.get("version") != 1 or not isinstance(plan.get("ops"), list):
-        raise SystemExit(f"{path} is not a rubrica plan")
+        raise SystemExit(f"{path} is not a rubricai plan")
     return plan
 
 

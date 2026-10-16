@@ -5,7 +5,7 @@ Issues and pull requests are welcome.
 ## Setup
 
 ```bash
-git clone https://github.com/JCPetrelli/rubrica.git && cd rubrica
+git clone https://github.com/JCPetrelli/rubricai.git && cd rubricai
 just install    # symlink the skill into ~/.claude/skills so Claude Code uses your checkout
 just test
 ```

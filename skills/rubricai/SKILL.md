@@ -1,9 +1,9 @@
 ---
-name: rubrica
+name: rubricai
 description: Use when the user wants to clean up, deduplicate, merge or complete their Apple / macOS Contacts address book — duplicate cards, the same person saved twice under nicknames ("Tom cell" and "Tommaso Ferri"), cards named only by an e-mail address, messy capitalisation, or people they e-mail (Apple Mail) or chat with (WhatsApp Desktop) who are missing from Contacts. Triggers on "clean up my contacts", "merge duplicate contacts", "dedupe Contacts.app", "who do I email that isn't in my contacts", "add my WhatsApp contacts".
 ---
 
-# Rubrica
+# Rubricai
 
 Clean up a macOS address book as a ladder of reviewed plans. Each rung needs more judgement than the one before it. Nothing changes without a plan the user approved, and every applied plan leaves a vCard undo file. "Just do it, I trust you" does not remove the approvals: merges cannot be undone in place.
 
@@ -12,7 +12,7 @@ Clean up a macOS address book as a ladder of reviewed plans. Each rung needs mor
 The engine is two directories above this skill's base directory. Shell variables do not survive between tool calls, so start every command with the full prefix:
 
 ```bash
-PYTHONPATH="<skill base directory>/../.." python3 -m rubrica --help
+PYTHONPATH="<skill base directory>/../.." python3 -m rubricai --help
 ```
 
 Below, `rb` stands for that prefix. Ask the user for a working folder first: exports, plans and backups hold personal data. Needs macOS and `python3` 3.10+, no packages. The first run triggers the Automation prompt for Contacts; `rb mail` needs Full Disk Access for the terminal.

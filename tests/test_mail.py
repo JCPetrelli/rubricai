@@ -1,13 +1,13 @@
 import datetime as dt
 import sqlite3
 
-from rubrica import mail
+from rubricai import mail
 
 ME = "me@example.org"
 
 
 def build_index(path, messages):
-    """A tiny Envelope Index with the columns rubrica reads.
+    """A tiny Envelope Index with the columns rubricai reads.
 
     messages: [(sender, [(type, address, name)], mailbox, flags)] where flags may set
     list_id_hash / unsubscribe_type / automated_conversation.

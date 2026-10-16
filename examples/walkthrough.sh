@@ -9,8 +9,8 @@ W="$(mktemp -d)"
 cp "$ROOT/examples/demo/contacts.json" "$W/"
 cd "$W"
 show() { local out="" a; for a in "$@"; do [[ "$a" == *" "* ]] && a="\"$a\""; out+=" $a"; done; echo "$out"; }
-rb() { echo; echo "\$ rb$(show "$@")"; PYTHONPATH="$ROOT" python3 -m rubrica "$@"; }
-yes_() { echo "  (user: yes)"; PYTHONPATH="$ROOT" python3 -m rubrica apply "$1" --offline contacts.json | sed 's/^/  /'; }
+rb() { echo; echo "\$ rb$(show "$@")"; PYTHONPATH="$ROOT" python3 -m rubricai "$@"; }
+yes_() { echo "  (user: yes)"; PYTHONPATH="$ROOT" python3 -m rubricai apply "$1" --offline contacts.json | sed 's/^/  /'; }
 
 {
 rb inventory

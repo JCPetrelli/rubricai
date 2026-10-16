@@ -1,6 +1,6 @@
 import pytest
 
-from rubrica.normalize import (display_name_from_header, is_redundant_alias,
+from rubricai.normalize import (display_name_from_header, is_redundant_alias,
                                    name_from_address, names_compatible, phone_key, title_case)
 
 

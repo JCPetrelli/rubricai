@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from rubrica import cli, plan
+from rubricai import cli, plan
 from tests.helpers import card
 
 
@@ -87,7 +87,7 @@ def test_pick_accepts_ids(tmp_path):
 
 
 def test_offline_apply_merges_like_apply_js():
-    from rubrica import offline
+    from rubricai import offline
     a = card("Tommaso Ferri", phones=["+49 176 5550606"])
     b = card("Tom cell", phones=["0176 5550606", "+39 320 5550707"], note="Climbing")
     c = card("Paola Benz", phones=["+39 347 0000001"])
@@ -103,7 +103,7 @@ def test_offline_apply_merges_like_apply_js():
 
 
 def test_offline_creates_never_collide_across_runs():
-    from rubrica import offline
+    from rubricai import offline
     create = {"ops": [{"op": "create", "firstName": "A", "lastName": "One"}]}
     first = offline.apply_plan([], create)
     second = offline.apply_plan(first, {"ops": [{"op": "create", "firstName": "B", "lastName": "Two"}]})

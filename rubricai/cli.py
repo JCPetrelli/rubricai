@@ -1,4 +1,4 @@
-"""rubrica command line. Run `python3 -m rubrica --help`.
+"""rubricai command line. Run `python3 -m rubricai --help`.
 
 Read commands: backup, export, inventory, scan, mail, whatsapp.
 The only command that changes Contacts is `apply`, and only with --yes.
@@ -243,11 +243,11 @@ def cmd_apply(a):
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(prog="rubrica", description=__doc__,
+    ap = argparse.ArgumentParser(prog="rubricai", description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("backup", help="all cards to one .vcf")
-    s.add_argument("--dir", default="rubrica-backups")
+    s.add_argument("--dir", default="rubricai-backups")
     s = sub.add_parser("export", help="all cards to JSON (read-only)")
     s.add_argument("--out", default="contacts.json")
     s.add_argument("--images", action="store_true", help="also record which cards have a photo (slower)")

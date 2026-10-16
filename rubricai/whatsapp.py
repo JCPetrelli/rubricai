@@ -22,7 +22,7 @@ APPLE_EPOCH = 978307200  # Core Data dates count from 2001-01-01
 def snapshot(container=CONTAINER):
     if not os.path.isdir(container):
         raise SystemExit(f"WhatsApp Desktop data not found at {container}")
-    tmp = tempfile.mkdtemp(prefix="rubrica-wa-")
+    tmp = tempfile.mkdtemp(prefix="rubricai-wa-")
     for name in os.listdir(container):
         if name.startswith(("ChatStorage.sqlite", "ContactsV2.sqlite")):
             shutil.copy2(os.path.join(container, name), tmp)

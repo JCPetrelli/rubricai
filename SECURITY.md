@@ -1,6 +1,6 @@
 # Security and privacy
 
-Rubrica runs locally. It sends nothing over the network: it reads Contacts.app through `osascript`, Apple Mail's index and WhatsApp Desktop's databases with SQLite, and writes files only where you tell it to.
+Rubricai runs locally. It sends nothing over the network: it reads Contacts.app through `osascript`, Apple Mail's index and WhatsApp Desktop's databases with SQLite, and writes files only where you tell it to.
 
 Those files hold personal data about other people: exports, plans, candidate lists, logs and vCard backups. Keep them out of version control (`.gitignore` covers the defaults) and delete them when you are done.
 

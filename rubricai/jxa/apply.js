@@ -2,7 +2,7 @@
 // usage: osascript -l JavaScript apply.js <plan.json> <undo.vcf> <log.json>
 //
 // Before the first change to any card, its vCard is appended to <undo.vcf>, so every
-// edited or deleted card can be re-imported. Ops (see rubrica/plan.py):
+// edited or deleted card can be re-imported. Ops (see rubricai/plan.py):
 //   delete        {id}
 //   merge         {keep, others[], aliases}   copy values into keep, then delete others
 //   remove_values {id, phones[], emails[], urls[], addresses[]}

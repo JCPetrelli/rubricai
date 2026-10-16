@@ -1,4 +1,4 @@
-from rubrica import dedupe
+from rubricai import dedupe
 from tests.helpers import card, names
 
 

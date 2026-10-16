@@ -9,6 +9,6 @@ plan*.json
 *.undo.vcf
 *.log.json
 *.apply.json
-rubrica-backups/
+rubricai-backups/
 work/
 examples/demo/
