@@ -84,3 +84,27 @@ def test_pick_accepts_ids(tmp_path):
     out = str(tmp_path / "p.json")
     cli.main(["pick", out, "--contacts", contacts, "--merge", cs[0]["id"], cs[1]["id"]])
     assert plan.load(out)["ops"][0]["others"] == [cs[1]["id"]]
+
+
+def test_offline_apply_merges_like_apply_js():
+    from rubrica import offline
+    a = card("Tommaso Ferri", phones=["+49 176 5550606"])
+    b = card("Tom cell", phones=["0176 5550606", "+39 320 5550707"], note="Climbing")
+    c = card("Paola Benz", phones=["+39 347 0000001"])
+    p = {"ops": [{"op": "merge", "keep": a["id"], "others": [b["id"]], "aliases": True},
+                 {"op": "set", "id": c["id"], "fields": {"lastName": "Benzoni"}},
+                 {"op": "create", "firstName": "Kim", "lastName": "Lee",
+                  "emails": [{"label": "home", "value": "kim@example.org"}]}]}
+    after = {x["name"]: x for x in offline.apply_plan([a, b, c], p)}
+    assert set(after) == {"Tommaso Ferri", "Paola Benzoni", "Kim Lee"}
+    t = after["Tommaso Ferri"]
+    assert [x["value"] for x in t["phones"]] == ["+49 176 5550606", "+39 320 5550707"]
+    assert t["note"] == "Climbing\nAlso saved as: Tom cell"
+
+
+def test_offline_creates_never_collide_across_runs():
+    from rubrica import offline
+    create = {"ops": [{"op": "create", "firstName": "A", "lastName": "One"}]}
+    first = offline.apply_plan([], create)
+    second = offline.apply_plan(first, {"ops": [{"op": "create", "firstName": "B", "lastName": "Two"}]})
+    assert len(second) == 2

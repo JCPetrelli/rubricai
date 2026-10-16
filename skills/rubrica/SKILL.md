@@ -36,7 +36,7 @@ Start with `rb backup` (all cards to one `.vcf`). Then `rb export` → `contacts
 | 7 | `rb whatsapp --out wa.json` | WhatsApp address-book entries and unsaved chat numbers | User picks |
 | 8 | `rb scan title-case --plan p8.json` | Names in lower or upper case, including the cards just added | Show a sample, apply on a yes |
 
-Apply any plan with `rb apply plan.json`, a dry run that prints the counts. Then run `rb apply plan.json --yes`. It writes `plan.undo.vcf` (each touched card, before its first change) and `plan.log.json`. `pick --merge` takes exact card names or card ids (from the plan file), keeper first.
+Apply any plan with `rb apply plan.json`, a dry run that prints the counts. `rb apply plan.json --offline contacts.json` applies it to the export instead, to preview the result (then export again before the real apply). Then run `rb apply plan.json --yes`. It writes `plan.undo.vcf` (each touched card, before its first change) and `plan.log.json`. `pick --merge` takes exact card names or card ids (from the plan file), keeper first.
 
 ## Rules for each rung
 

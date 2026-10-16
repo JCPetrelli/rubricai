@@ -1,0 +1,153 @@
+
+$ rb inventory
+cards                      37
+exact copies (extra cards) 2 in 1 sets
+named by an e-mail address 2
+without a name             0
+without phone and e-mail   0
+
+$ rb scan exact --plan p1.json
+2 exact copies to delete
+plan: p1.json
+  (user: yes)
+  plan p1.json: {'delete': 2}; removes 2 cards
+  offline: 37 -> 35 cards in contacts.json; Contacts.app untouched
+
+$ rb scan same-name --plan p2.json
+1 same-name groups to merge; 1 ambiguous (review)
+  Marco Neri  <=  Marco Neri
+  REVIEW Nina | Nina  (one-word name, nothing shared)
+plan: p2.json
+  (user: yes)
+  plan p2.json: {'merge': 1}; removes 1 cards
+  offline: 35 -> 34 cards in contacts.json; Contacts.app untouched
+
+$ rb scan linked --plan p3.json
+2 linked groups to merge; 3 pairs and 1 chains to review
+  Roberto Landi  <=  Rob landi
+  Tommaso Ferri  <=  Tom cell | Tom casa
+  REVIEW Nora (vet) | Ivo (judo)  (share p:235550909, names differ)
+  REVIEW Acme Tools | Gloria Sala  (share e:gloria@example.org, names differ)
+  REVIEW Acme Tools | Omar Lanza  (share e:omar@example.org, names differ)
+  REVIEW Omar Lanza | Acme Tools | omar@example.org  (chain: linked cards with unrelated names)
+plan: p3.json
+  (user: merge the three groups; Nora and Ivo are two people; omar@example.org is Omar's card)
+
+$ rb pick p3.json --merge "Omar Lanza" omar@example.org
+merge: keep 'Omar Lanza' <= ['omar@example.org']
+  (user: yes)
+  plan p3.json: {'merge': 3}; removes 4 cards
+  offline: 34 -> 30 cards in contacts.json; Contacts.app untouched
+
+$ rb scan name-only --plan p4.json
+5 name-only candidate pairs (review all)
+  REVIEW Dad Tim | Dad Dad Work  (same name apart from descriptor words)
+  REVIEW Gio Casa | Gio  (same name apart from descriptor words)
+  REVIEW Gabri Gallo | Gabriella Gallo  (first name is a short form of the other)
+  REVIEW Adriàn Ruiz | Adrián Ruiz  (same first and last name)
+  REVIEW Ann Bell | ann_bell@example.org  (e-mail address spells the name)
+plan: p4.json
+  (user: all five are the same person)
+
+$ rb pick p4.json --merge "Dad Dad Work" "Dad Tim" --merge Gio "Gio Casa" --merge "Gabriella Gallo" "Gabri Gallo" --merge "Adrián Ruiz" "Adriàn Ruiz" --merge "Ann Bell" ann_bell@example.org
+merge: keep 'Dad Dad Work' <= ['Dad Tim']
+merge: keep 'Gio' <= ['Gio Casa']
+merge: keep 'Gabriella Gallo' <= ['Gabri Gallo']
+merge: keep 'Adrián Ruiz' <= ['Adriàn Ruiz']
+merge: keep 'Ann Bell' <= ['ann_bell@example.org']
+  (user: yes)
+  plan p4.json: {'merge': 5}; removes 5 cards
+  offline: 30 -> 25 cards in contacts.json; Contacts.app untouched
+
+$ rb scan in-card --plan p5.json
+2 cards with values stored twice or repeated note lines
+  Mira Novak: {'phones': ['0176 55520202'], 'emails': ['Mira.Novak@example.org'], 'addresses': ['Via Roma 1 31011 Asolo']}
+  Ines Kraus: note lines
+plan: p5.json
+  (user: yes)
+  plan p5.json: {'remove_values': 1, 'set': 1}; removes 0 cards
+  offline: 25 -> 25 cards in contacts.json; Contacts.app untouched
+
+$ rb mail --db "examples/demo/Envelope Index" --me you@example.org --years 3 --out mail.json
+25 messages 2023-10-17..2026-10-16; 6 candidates -> mail.json
+
+A (two-way: you wrote and they wrote, or you wrote 2+ times): 2
+  s4   r4   cc0   2025  Sabine Weber                   s.weber@studio.example
+  s3   r0   cc0   2025  Hausverwaltung Nord            hausverwaltung@flat.example
+
+B (you wrote to them once): 1
+  s1   r0   cc0   2025  Pietro Costa                   pietro.costa@example.org [name guessed]
+
+C (they wrote to you personally 2+ times): 2
+  s0   r3   cc0   2025  Club                           organiser@club.example
+  s0   r2   cc0   2025  Kim Lee                        kim.lee@example.org
+
+D (often on Cc with you): 1
+  s0   r0   cc3   2025  Dora Fux                       dora.fux@example.org
+  (user: add Sabine, the Hausverwaltung, Pietro Costa and Kim Lee; skip the club and Dora)
+
+$ rb add-plan mail.json --plan p6.json
+0 cards get new values, 4 new cards -> p6.json
+  (user: yes)
+  plan p6.json: {'create': 4}; removes 0 cards
+  offline: 25 -> 29 cards in contacts.json; Contacts.app untouched
+
+$ rb whatsapp --folder examples/demo/whatsapp
+WhatsApp address-book entries missing from Contacts: 1
+  Yara (Swimming)                +491525552525
+
+One-to-one chats with unsaved numbers: 2
+  msgs=3    mine=1   last=2025-10-01  +393295552626      shown as '+39 329 555 2626' push name 'Foto Ottica Sole'
+  msgs=1    mine=0   last=2025-10-13  +447700900272      shown as '+44 7700 900272' push name ''
+  (user: add Yara and the optician)
+
+$ rb add-plan wa.json --plan p7.json
+0 cards get new values, 2 new cards -> p7.json
+  (user: yes)
+  plan p7.json: {'create': 2}; removes 0 cards
+  offline: 29 -> 31 cards in contacts.json; Contacts.app untouched
+
+$ rb scan title-case --plan p8.json
+5 cards to re-case
+  Nora (vet) -> {'lastName': '(Vet)'}
+  Ivo (judo) -> {'lastName': '(Judo)'}
+  GIULIA MORETTI -> {'firstName': 'Giulia', 'lastName': 'Moretti'}
+  elena fabbri -> {'firstName': 'Elena', 'lastName': 'Fabbri'}
+  Paolo Di stefano -> {'lastName': 'Di Stefano'}
+plan: p8.json
+  (user: yes)
+  plan p8.json: {'set': 5}; removes 0 cards
+  offline: 31 -> 31 cards in contacts.json; Contacts.app untouched
+
+$ rb inventory
+cards                      31
+exact copies (extra cards) 0 in 0 sets
+named by an e-mail address 0
+without a name             0
+without phone and e-mail   0
+
+$ # the merged Tommaso Ferri card
+{
+ "name": "Tommaso Ferri",
+ "phones": [
+  {
+   "label": "mobile",
+   "value": "+49 176 555 0606"
+  },
+  {
+   "label": "mobile",
+   "value": "+39 320 555 0707"
+  },
+  {
+   "label": "mobile",
+   "value": "+39 0423 555 0808"
+  }
+ ],
+ "emails": [
+  {
+   "label": "home",
+   "value": "tommaso@example.org"
+  }
+ ],
+ "note": "Also saved as: Tom cell, Tom casa"
+}

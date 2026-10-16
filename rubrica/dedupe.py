@@ -174,6 +174,8 @@ def name_only_pairs(contacts):
     def add(a, b, why):
         if a["id"] == b["id"] or keys(a) & keys(b):
             return                                # linked_groups already covers shared keys
+        if (a.get("name") or "").strip().lower() == (b.get("name") or "").strip().lower():
+            return                                # same_name_groups covers identical names
         k = tuple(sorted((a["id"], b["id"])))
         pairs.setdefault(k, (a, b, why))
 

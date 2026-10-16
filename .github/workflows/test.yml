@@ -18,3 +18,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: python -m pip install pytest
       - run: python -m pytest -q
+
+  demo-walkthrough:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: bash examples/walkthrough.sh
+      - run: grep -q "cards                      31" examples/walkthrough.txt

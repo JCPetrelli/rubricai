@@ -21,3 +21,7 @@ install:
 
 test:
     python3 -m pytest -q
+
+# Invented demo address book: all eight rungs offline -> examples/walkthrough.txt
+demo:
+    bash examples/walkthrough.sh

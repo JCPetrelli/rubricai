@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 
-from . import dedupe, mail, plan as planlib, whatsapp
+from . import dedupe, mail, offline, plan as planlib, whatsapp
 from .normalize import is_email_name, name_tokens
 
 JXA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jxa")
@@ -134,7 +134,7 @@ def cmd_pick(a):
 
 
 def cmd_mail(a):
-    db = mail.envelope_index()
+    db = a.db or mail.envelope_index()
     if not a.me:
         print("Addresses that send and receive a lot; pass the ones that are yours with --me:")
         for addr, sent, received in mail.likely_own_addresses(db):
@@ -206,7 +206,7 @@ def cmd_add_plan(a):
 
 def cmd_whatsapp(a):
     cs = load_contacts(a.contacts)
-    folder = whatsapp.snapshot()
+    folder = whatsapp.snapshot(a.folder) if a.folder else whatsapp.snapshot()
     book, chats = whatsapp.missing(folder, [p["value"] for c in cs for p in c["phones"]])
     if a.out:
         with open(a.out, "w", encoding="utf-8") as f:
@@ -225,6 +225,13 @@ def cmd_apply(a):
     p = planlib.load(a.plan)
     count, cards = planlib.summary(p)
     print(f"plan {a.plan}: {count}; removes {cards} cards")
+    if a.offline:
+        cs = load_contacts(a.offline)
+        after = offline.apply_plan(cs, p)
+        with open(a.offline, "w", encoding="utf-8") as f:
+            json.dump(after, f, ensure_ascii=False, indent=1)
+        print(f"offline: {len(cs)} -> {len(after)} cards in {a.offline}; Contacts.app untouched")
+        return
     if not a.yes:
         print("dry run: nothing changed. Re-run with --yes after the user approved this plan.")
         return
@@ -265,6 +272,7 @@ def main(argv=None):
     s.add_argument("--since")
     s.add_argument("--until")
     s.add_argument("--out", default="mail-candidates.json")
+    s.add_argument("--db", help="path to an Envelope Index (default: the one Apple Mail uses)")
     s.add_argument("--limit", type=int, default=60)
     s = sub.add_parser("add-plan", help="turn a reviewed list of people into a plan")
     s.add_argument("rows", help="JSON list of {name, address?, phone?, organization?, company?, note?}")
@@ -273,10 +281,13 @@ def main(argv=None):
     s = sub.add_parser("whatsapp", help="WhatsApp Desktop numbers missing from Contacts")
     s.add_argument("--contacts", default="contacts.json")
     s.add_argument("--out", help="also write the lists as JSON")
+    s.add_argument("--folder", help="WhatsApp data folder (default: the desktop app's container)")
     s.add_argument("--limit", type=int, default=60)
     s = sub.add_parser("apply", help="apply a reviewed plan (dry run without --yes)")
     s.add_argument("plan")
     s.add_argument("--yes", action="store_true")
+    s.add_argument("--offline", metavar="CONTACTS_JSON",
+                   help="apply to an exported JSON file instead of Contacts.app (preview, demo, tests)")
     a = ap.parse_args(argv)
     {"backup": cmd_backup, "export": cmd_export, "inventory": cmd_inventory, "scan": cmd_scan,
      "pick": cmd_pick, "mail": cmd_mail, "add-plan": cmd_add_plan, "whatsapp": cmd_whatsapp,

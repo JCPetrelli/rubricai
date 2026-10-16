@@ -11,3 +11,4 @@ plan*.json
 *.apply.json
 rubrica-backups/
 work/
+examples/demo/
