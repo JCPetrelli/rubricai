@@ -1,0 +1,10 @@
+{
+  "name": "rubrica",
+  "description": "Clean up and complete the macOS Contacts address book: exact copies, same-person merges, entity resolution by name, in-card duplicates, Title Case, and missing people from Apple Mail and WhatsApp Desktop. Every change is a reviewed plan with a vCard undo file.",
+  "version": "0.1.0",
+  "author": { "name": "Jacopo Castellano" },
+  "homepage": "https://github.com/JCPetrelli/rubrica",
+  "repository": "https://github.com/JCPetrelli/rubrica",
+  "license": "MIT",
+  "keywords": ["skill", "macos", "contacts", "deduplication", "entity-resolution", "apple-mail", "whatsapp"]
+}

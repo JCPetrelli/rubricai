@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# working files: they hold real people's data, never commit them
+contacts*.json
+*-candidates.json
+plan*.json
+*.undo.vcf
+*.log.json
+*.apply.json
+rubrica-backups/
+work/
